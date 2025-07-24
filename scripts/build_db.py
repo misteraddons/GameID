@@ -11,7 +11,7 @@ from sys import argv
 from urllib.request import urlopen
 
 # constants
-CONSOLES = {'GB', 'GBA', 'GBC', 'GC', 'Genesis', 'N64', 'NeoGeoCD', 'NES', 'PSP', 'PSX', 'PS2', 'Saturn', 'SegaCD', 'SNES'}
+CONSOLES = {'Amiga', 'Atari2600', 'Atari5200', 'Atari7800', 'AtariJaguar', 'AtariLynx', 'AtariST', 'C64', 'CasioLoopy', 'ColecoVision', 'FMTowns', 'GameCom', 'GameGear', 'GameWatch', 'GB', 'GBA', 'GBC', 'GC', 'Genesis', 'MSX', 'MSX2', 'MasterSystem', 'MegaDuck', 'N64', 'N64DD', 'NeoGeoCD', 'NES', 'NGP', 'NGPC', 'NintendoFDS', 'PC98', 'PCEngine', 'PCEngineSuperGrafx', 'PSP', 'PSX', 'PS2', 'Satellaview', 'Saturn', 'SegaCD', 'Sega32X', 'SegaPico', 'SegaSG1000', 'SNES', 'SufamiTurbo', 'Supervision', 'Vectrex', 'WonderSwan', 'WonderSwanColor'}
 
 # get GameDB URL
 def get_url(console):
@@ -107,6 +107,142 @@ if __name__ == "__main__":
     # fix SNES: keys = (developer_ID, internal_title, rom_version, checksum) tuples
     print("Fixing SNES database...")
     db['SNES'] = {(int(v['developer_ID'],0), v['internal_title'], int(v['rom_version'],0), int(v['checksum'],0)):v for k,v in db['SNES'].items()}
+
+    # fix Atari2600 (convert CRC32 strings to int)
+    print("Fixing Atari2600 database...")
+    db['Atari2600'] = {int(k,16):v for k,v in db['Atari2600'].items()}
+
+    # fix Atari5200 (convert CRC32 strings to int)
+    print("Fixing Atari5200 database...")
+    db['Atari5200'] = {int(k,16):v for k,v in db['Atari5200'].items()}
+
+    # fix Atari7800 (convert CRC32 strings to int)
+    print("Fixing Atari7800 database...")
+    db['Atari7800'] = {int(k,16):v for k,v in db['Atari7800'].items()}
+
+    # fix AtariJaguar (convert CRC32 strings to int)
+    print("Fixing AtariJaguar database...")
+    db['AtariJaguar'] = {int(k,16):v for k,v in db['AtariJaguar'].items()}
+
+    # fix AtariLynx (convert CRC32 strings to int)
+    print("Fixing AtariLynx database...")
+    db['AtariLynx'] = {int(k,16):v for k,v in db['AtariLynx'].items()}
+
+    # fix WonderSwan (convert CRC32 strings to int)
+    print("Fixing WonderSwan database...")
+    db['WonderSwan'] = {int(k,16):v for k,v in db['WonderSwan'].items()}
+
+    # fix WonderSwanColor (convert CRC32 strings to int)
+    print("Fixing WonderSwanColor database...")
+    db['WonderSwanColor'] = {int(k,16):v for k,v in db['WonderSwanColor'].items()}
+
+    # fix ColecoVision (convert CRC32 strings to int)
+    print("Fixing ColecoVision database...")
+    db['ColecoVision'] = {int(k,16):v for k,v in db['ColecoVision'].items()}
+
+    # fix PCEngine (convert CRC32 strings to int)
+    print("Fixing PCEngine database...")
+    db['PCEngine'] = {int(k,16):v for k,v in db['PCEngine'].items()}
+
+    # fix PCEngineSuperGrafx (convert CRC32 strings to int)
+    print("Fixing PCEngineSuperGrafx database...")
+    db['PCEngineSuperGrafx'] = {int(k,16):v for k,v in db['PCEngineSuperGrafx'].items()}
+
+    # fix GameGear (convert CRC32 strings to int)
+    print("Fixing GameGear database...")
+    db['GameGear'] = {int(k,16):v for k,v in db['GameGear'].items()}
+
+    # fix MasterSystem (convert CRC32 strings to int)
+    print("Fixing MasterSystem database...")
+    db['MasterSystem'] = {int(k,16):v for k,v in db['MasterSystem'].items()}
+
+    # fix Sega32X (convert CRC32 strings to int)
+    print("Fixing Sega32X database...")
+    db['Sega32X'] = {int(k,16):v for k,v in db['Sega32X'].items()}
+
+    # fix NintendoFDS (convert CRC32 strings to int)
+    print("Fixing NintendoFDS database...")
+    db['NintendoFDS'] = {int(k,16):v for k,v in db['NintendoFDS'].items()}
+
+    # fix SegaSG1000 (convert CRC32 strings to int)
+    print("Fixing SegaSG1000 database...")
+    db['SegaSG1000'] = {int(k,16):v for k,v in db['SegaSG1000'].items()}
+
+    # fix Vectrex (convert CRC32 strings to int)
+    print("Fixing Vectrex database...")
+    db['Vectrex'] = {int(k,16):v for k,v in db['Vectrex'].items()}
+
+    # fix NGP (convert CRC32 strings to int)
+    print("Fixing NGP database...")
+    db['NGP'] = {int(k,16):v for k,v in db['NGP'].items()}
+
+    # fix NGPC (convert CRC32 strings to int)
+    print("Fixing NGPC database...")
+    db['NGPC'] = {int(k,16):v for k,v in db['NGPC'].items()}
+
+    # fix GameWatch (convert CRC32 strings to int)
+    print("Fixing GameWatch database...")
+    db['GameWatch'] = {int(k,16):v for k,v in db['GameWatch'].items()}
+
+    # fix C64 (convert CRC32 strings to int)
+    print("Fixing C64 database...")
+    db['C64'] = {int(k,16):v for k,v in db['C64'].items()}
+
+    # fix AtariST (convert CRC32 strings to int)
+    print("Fixing AtariST database...")
+    db['AtariST'] = {int(k,16):v for k,v in db['AtariST'].items()}
+
+    # fix Satellaview (convert CRC32 strings to int)
+    print("Fixing Satellaview database...")
+    db['Satellaview'] = {int(k,16):v for k,v in db['Satellaview'].items()}
+
+    # fix N64DD (convert CRC32 strings to int)
+    print("Fixing N64DD database...")
+    db['N64DD'] = {int(k,16):v for k,v in db['N64DD'].items()}
+
+    # fix SufamiTurbo (convert CRC32 strings to int)
+    print("Fixing SufamiTurbo database...")
+    db['SufamiTurbo'] = {int(k,16):v for k,v in db['SufamiTurbo'].items()}
+
+    # fix SegaPico (convert CRC32 strings to int)
+    print("Fixing SegaPico database...")
+    db['SegaPico'] = {int(k,16):v for k,v in db['SegaPico'].items()}
+
+    # fix Amiga (convert CRC32 strings to int)
+    print("Fixing Amiga database...")
+    db['Amiga'] = {int(k,16):v for k,v in db['Amiga'].items()}
+
+    # fix MSX (convert CRC32 strings to int)
+    print("Fixing MSX database...")
+    db['MSX'] = {int(k,16):v for k,v in db['MSX'].items()}
+
+    # fix MSX2 (convert CRC32 strings to int)
+    print("Fixing MSX2 database...")
+    db['MSX2'] = {int(k,16):v for k,v in db['MSX2'].items()}
+
+    # fix CasioLoopy (convert CRC32 strings to int)
+    print("Fixing CasioLoopy database...")
+    db['CasioLoopy'] = {int(k,16):v for k,v in db['CasioLoopy'].items()}
+
+    # fix GameCom (convert CRC32 strings to int)
+    print("Fixing GameCom database...")
+    db['GameCom'] = {int(k,16):v for k,v in db['GameCom'].items()}
+
+    # fix Supervision (convert CRC32 strings to int)
+    print("Fixing Supervision database...")
+    db['Supervision'] = {int(k,16):v for k,v in db['Supervision'].items()}
+
+    # fix MegaDuck (convert CRC32 strings to int)
+    print("Fixing MegaDuck database...")
+    db['MegaDuck'] = {int(k,16):v for k,v in db['MegaDuck'].items()}
+
+    # fix FMTowns (convert CRC32 strings to int)
+    print("Fixing FMTowns database...")
+    db['FMTowns'] = {int(k,16):v for k,v in db['FMTowns'].items()}
+
+    # fix PC98 (convert CRC32 strings to int)
+    print("Fixing PC98 database...")
+    db['PC98'] = {int(k,16):v for k,v in db['PC98'].items()}
 
     # dump GameID database
     print("Writing GameID database: %s" % argv[1])

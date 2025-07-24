@@ -68,6 +68,184 @@ SEGACD_MAGIC_WORDS = [bytes(ord(c) for c in w) for w in ['SEGADISCSYSTEM', 'SEGA
 SNES_LOROM_HEADER_START = 0x7FC0
 SNES_HIROM_HEADER_START = 0xFFC0
 
+# Atari 2600 constants
+ATARI2600_ROM_SIZES = {
+    2048: {'type': '2K', 'banking': 'None'},
+    4096: {'type': '4K', 'banking': 'None'},
+    8192: {'type': '8K', 'banking': 'F8'},
+    16384: {'type': '16K', 'banking': 'F6'},
+    32768: {'type': '32K', 'banking': 'F4'},
+    10240: {'type': 'DPC', 'banking': 'Pitfall 2'},
+    10495: {'type': 'DPC', 'banking': 'Pitfall 2'},
+    12288: {'type': 'FA', 'banking': 'RAM+'},
+    24576: {'type': 'FA2', 'banking': '24K'},
+    65536: {'type': 'Megaboy', 'banking': 'Dynacom'}
+}
+
+# Atari 5200 constants
+ATARI5200_ROM_SIZES = {
+    2048: {'type': '2K', 'cartridge_type': 'BIOS'},
+    4096: {'type': '4K', 'cartridge_type': 'Standard'},
+    8192: {'type': '8K', 'cartridge_type': 'Standard'},
+    16384: {'type': '16K', 'cartridge_type': 'Standard'},
+    32768: {'type': '32K', 'cartridge_type': 'Standard'},
+    40960: {'type': '40K', 'cartridge_type': 'Special Banking'}
+}
+ATARI5200_SIGNATURES = [b'\x58\x52', b'\x58\x53', b'\x58\x54']
+
+# Atari 7800 constants
+ATARI7800_HEADER_SIZE = 128
+ATARI7800_MAGIC = b'ATARI7800'
+ATARI7800_CART_TYPES = {
+    0x00: 'Standard cartridge',
+    0x01: 'Pokey cartridge',
+    0x02: 'Supercart bank switched',
+    0x04: 'Supercart RAM at $4000',
+    0x08: 'ROM at $4000',
+    0x10: 'Bank 6 at $4000'
+}
+ATARI7800_TV_FORMATS = {0: 'NTSC', 1: 'PAL'}
+ATARI7800_CONTROLLERS = {
+    0: 'None',
+    1: 'Joystick',
+    2: 'Light Gun',
+    3: 'Paddle',
+    4: 'Trak-Ball',
+    5: 'Joystick (2-button)',
+    6: 'Driving Controller',
+    7: 'Keypad',
+    8: 'ST Mouse',
+    9: 'Amiga Mouse'
+}
+
+# Atari Jaguar constants
+ATARI_JAGUAR_ROM_SIZES = {
+    1048576: '1MB',    # 1 MB
+    2097152: '2MB',    # 2 MB  
+    4194304: '4MB',    # 4 MB
+    6291456: '6MB'     # 6 MB (rare)
+}
+
+# Atari Lynx constants
+ATARI_LYNX_HEADER_SIZE = 64
+ATARI_LYNX_MAGIC = b'LYNX'
+ATARI_LYNX_ROM_SIZES = {
+    32768: '32KB',     # 32 KB
+    65536: '64KB',     # 64 KB  
+    131072: '128KB',   # 128 KB
+    262144: '256KB',   # 256 KB
+    524288: '512KB',   # 512 KB
+    1048576: '1MB'     # 1 MB
+}
+
+# WonderSwan constants
+WONDERSWAN_HEADER_SIZE = 10
+WONDERSWAN_ROM_SIZES = {
+    131072: '128KB',   # 128 KB (1 Mbit)
+    262144: '256KB',   # 256 KB (2 Mbit) 
+    524288: '512KB',   # 512 KB (4 Mbit)
+    1048576: '1MB',    # 1 MB (8 Mbit)
+    2097152: '2MB',    # 2 MB (16 Mbit)
+    4194304: '4MB',    # 4 MB (32 Mbit)
+    8388608: '8MB',    # 8 MB (64 Mbit)
+    16777216: '16MB'   # 16 MB (128 Mbit)
+}
+WONDERSWAN_ORIENTATIONS = {0: 'Horizontal', 1: 'Vertical'}
+WONDERSWAN_MAPPER_TYPES = {
+    0: 'ROM only',
+    1: 'Mapper 1 (SRAM)',
+    2: 'Mapper 2 (RTC)',
+    3: 'Mapper 3 (SRAM + RTC)',
+    4: 'Mapper 4 (EEPROM)',
+    5: 'Mapper 5 (EEPROM + RTC)'
+}
+
+# ColecoVision constants
+COLECOVISION_MAGIC_1 = b'\xAA\x55'
+COLECOVISION_MAGIC_2 = b'\x55\xAA'
+COLECOVISION_ROM_SIZES = {
+    8192: '8KB',       # 8 KB
+    16384: '16KB',     # 16 KB
+    24576: '24KB',     # 24 KB
+    32768: '32KB',     # 32 KB
+    49152: '48KB',     # 48 KB
+    65536: '64KB'      # 64 KB
+}
+
+# PC Engine constants
+PCENGINE_ROM_SIZES = {
+    32768: '32KB',     # 32 KB (256 Kbit)
+    65536: '64KB',     # 64 KB (512 Kbit)
+    131072: '128KB',   # 128 KB (1 Mbit)
+    262144: '256KB',   # 256 KB (2 Mbit)
+    393216: '384KB',   # 384 KB (3 Mbit)
+    524288: '512KB',   # 512 KB (4 Mbit)
+    786432: '768KB',   # 768 KB (6 Mbit)
+    1048576: '1MB',    # 1 MB (8 Mbit)
+    1572864: '1.5MB',  # 1.5 MB (12 Mbit)
+    2097152: '2MB',    # 2 MB (16 Mbit)
+    2621440: '2.5MB'   # 2.5 MB (20 Mbit)
+}
+
+# Game Gear constants
+GAMEGEAR_TMR_SEGA_MAGIC = b'TMR SEGA'
+GAMEGEAR_ROM_SIZES = {
+    32768: '32KB',     # 32 KB (256 Kbit)
+    65536: '64KB',     # 64 KB (512 Kbit)
+    131072: '128KB',   # 128 KB (1 Mbit)
+    262144: '256KB',   # 256 KB (2 Mbit)
+    524288: '512KB',   # 512 KB (4 Mbit)
+    1048576: '1MB'     # 1 MB (8 Mbit)
+}
+GAMEGEAR_HEADER_LOCATIONS = [0x7FF0, 0x3FF0, 0x1FF0]  # Common header locations
+
+# Master System constants
+MASTERSYSTEM_TMR_SEGA_MAGIC = b'TMR SEGA'
+MASTERSYSTEM_ROM_SIZES = {
+    8192: '8KB',       # 8 KB (64 Kbit)
+    16384: '16KB',     # 16 KB (128 Kbit)
+    32768: '32KB',     # 32 KB (256 Kbit)
+    65536: '64KB',     # 64 KB (512 Kbit)
+    131072: '128KB',   # 128 KB (1 Mbit)
+    262144: '256KB',   # 256 KB (2 Mbit)
+    524288: '512KB',   # 512 KB (4 Mbit)
+    1048576: '1MB'     # 1 MB (8 Mbit)
+}
+MASTERSYSTEM_HEADER_LOCATIONS = [0x7FF0, 0x3FF0, 0x1FF0]  # Common header locations
+
+# Sega 32X constants
+SEGA32X_MAGIC = b'SEGA 32X'
+SEGA32X_HEADER_OFFSET = 0x100
+SEGA32X_ROM_SIZES = {
+    131072: '128KB',   # 128 KB (1 Mbit)
+    262144: '256KB',   # 256 KB (2 Mbit)
+    524288: '512KB',   # 512 KB (4 Mbit)
+    1048576: '1MB',    # 1 MB (8 Mbit)
+    2097152: '2MB',    # 2 MB (16 Mbit)
+    4194304: '4MB',    # 4 MB (32 Mbit)
+    8388608: '8MB'     # 8 MB (64 Mbit)
+}
+
+# Nintendo FDS constants
+NINTENDO_FDS_MAGIC = b'\x01*NINTENDO-HVC*'
+NINTENDO_FDS_HEADER_SIZE = 16
+NINTENDO_FDS_BLOCK_SIZES = {
+    65500: '65500 bytes (standard)',
+    131000: '131000 bytes (2-sided)',
+    131016: '131016 bytes (2-sided with header)',
+    262000: '262000 bytes (4-sided)',
+    524000: '524000 bytes (8-sided)'
+}
+
+# Sega SG-1000 constants
+SEGA_SG1000_ROM_SIZES = {
+    8192: '8KB',       # 8 KB
+    16384: '16KB',     # 16 KB  
+    32768: '32KB',     # 32 KB
+    49152: '48KB',     # 48 KB (rare)
+    65536: '64KB'      # 64 KB (rare)
+}
+
 # recursively iterate using glob
 def recursive_glob(fn):
     to_visit = [fn]
@@ -1147,8 +1325,2136 @@ def identify_neogeocd(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb
                 out[k] = v
     return out
 
+# identify Atari 2600 game
+def identify_atari2600(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM and calculate CRC32
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    checksum = crc32(data)
+    
+    # prepare output with basic information
+    out = {
+        'crc32': hex(checksum)[2:].zfill(8),
+        'file_size': file_size,
+    }
+    
+    # determine ROM type and banking scheme based on file size
+    if file_size in ATARI2600_ROM_SIZES:
+        rom_info = ATARI2600_ROM_SIZES[file_size]
+        out['rom_type'] = rom_info['type']
+        out['banking_scheme'] = rom_info['banking']
+    else:
+        out['rom_type'] = 'Unknown'
+        out['banking_scheme'] = 'Unknown'
+    
+    # check for potential superchip RAM (8K, 16K, 32K ROMs)
+    if file_size in [8192, 16384, 32768] and len(data) >= 256:
+        first_256_bytes = data[:256]
+        if all(b == 0x00 for b in first_256_bytes) or all(b == 0xFF for b in first_256_bytes):
+            out['superchip_ram'] = 'Detected'
+        else:
+            out['superchip_ram'] = 'None'
+    else:
+        out['superchip_ram'] = 'None'
+    
+    # identify game from database using CRC32
+    if checksum in db['Atari2600']:
+        gamedb_entry = db['Atari2600'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify Atari 5200 game
+def identify_atari5200(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM and calculate CRC32
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    checksum = crc32(data)
+    
+    # prepare output with basic information
+    out = {
+        'crc32': hex(checksum)[2:].zfill(8),
+        'file_size': file_size,
+    }
+    
+    # verify this is an Atari 5200 ROM by checking signature in last 4 bytes
+    if file_size >= 4:
+        signature = data[-4:-2]  # Get bytes -4 to -3 (signature pattern)
+        valid_signature = any(signature == sig for sig in ATARI5200_SIGNATURES)
+        
+        if valid_signature:
+            out['signature_valid'] = 'Yes'
+            # Determine signature type
+            if signature == b'\x58\x52':
+                out['cartridge_signature'] = 'XR (Standard)'
+            elif signature == b'\x58\x53':
+                out['cartridge_signature'] = 'XS (Alternative)'
+            elif signature == b'\x58\x54':
+                out['cartridge_signature'] = 'XT (Special)'
+        else:
+            out['signature_valid'] = 'No'
+            out['cartridge_signature'] = 'Unknown'
+    else:
+        out['signature_valid'] = 'No'
+        out['cartridge_signature'] = 'File too small'
+    
+    # determine ROM type based on file size
+    if file_size in ATARI5200_ROM_SIZES:
+        rom_info = ATARI5200_ROM_SIZES[file_size]
+        out['rom_type'] = rom_info['type']
+        out['cartridge_type'] = rom_info['cartridge_type']
+    else:
+        out['rom_type'] = 'Unknown'
+        out['cartridge_type'] = 'Unknown'
+    
+    # extract 6502 interrupt vectors from last 6 bytes
+    if file_size >= 6:
+        vectors = data[-6:]
+        out['nmi_vector'] = hex((vectors[1] << 8) | vectors[0])[2:].zfill(4)
+        out['reset_vector'] = hex((vectors[3] << 8) | vectors[2])[2:].zfill(4)  
+        out['irq_vector'] = hex((vectors[5] << 8) | vectors[4])[2:].zfill(4)
+    
+    # identify game from database using CRC32
+    if checksum in db['Atari5200']:
+        gamedb_entry = db['Atari5200'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify Atari 7800 game
+def identify_atari7800(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM and calculate CRC32
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    checksum = crc32(data)
+    
+    # prepare output with basic information
+    out = {
+        'crc32': hex(checksum)[2:].zfill(8),
+        'file_size': file_size,
+    }
+    
+    # verify this is an Atari 7800 ROM by checking header
+    if file_size < ATARI7800_HEADER_SIZE:
+        out['header_valid'] = 'No'
+        out['error'] = 'File too small for A78 header'
+        return out
+    
+    # check for A78 header magic word
+    header = data[:ATARI7800_HEADER_SIZE]
+    magic_word = header[1:10]  # bytes 1-9 contain "ATARI7800"
+    
+    if magic_word == ATARI7800_MAGIC:
+        out['header_valid'] = 'Yes'
+        
+        # extract header information
+        out['header_version'] = header[0]
+        out['cart_title'] = header[17:49].rstrip(b'\x00').decode('ascii', errors='ignore').strip()
+        
+        # data length (4 bytes, little endian)
+        data_length = int.from_bytes(header[49:53], byteorder='little')
+        out['data_length'] = data_length
+        out['rom_size'] = file_size - ATARI7800_HEADER_SIZE
+        
+        # cart type (2 bytes)
+        cart_type = int.from_bytes(header[53:55], byteorder='little')
+        out['cart_type_raw'] = hex(cart_type)[2:].zfill(4)
+        
+        # decode cart type flags
+        cart_features = []
+        for flag, description in ATARI7800_CART_TYPES.items():
+            if cart_type & flag:
+                cart_features.append(description)
+        out['cart_features'] = ', '.join(cart_features) if cart_features else 'Standard cartridge'
+        
+        # controller types
+        controller1 = header[55] if len(header) > 55 else 0
+        controller2 = header[56] if len(header) > 56 else 0
+        out['controller1'] = ATARI7800_CONTROLLERS.get(controller1, 'Unknown')
+        out['controller2'] = ATARI7800_CONTROLLERS.get(controller2, 'Unknown')
+        
+        # TV format
+        tv_format = header[57] if len(header) > 57 else 0
+        out['tv_format'] = ATARI7800_TV_FORMATS.get(tv_format, 'Unknown')
+        
+        # save data peripheral (version 2+ header)
+        if out['header_version'] >= 2 and len(header) > 58:
+            out['save_peripheral'] = header[58]
+        
+    else:
+        out['header_valid'] = 'No'
+        out['error'] = 'Invalid A78 header magic word'
+    
+    # identify game from database using CRC32
+    if checksum in db['Atari7800']:
+        gamedb_entry = db['Atari7800'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify Atari Jaguar game
+def identify_atari_jaguar(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM and calculate CRC32
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    checksum = crc32(data)
+    
+    # prepare output with basic information
+    out = {
+        'crc32': hex(checksum)[2:].zfill(8),
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category
+    if file_size in ATARI_JAGUAR_ROM_SIZES:
+        out['rom_size'] = ATARI_JAGUAR_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Atari Jaguar ROMs are raw binary dumps without headers
+    # The ROM data starts immediately at the beginning
+    out['header_type'] = 'Raw ROM dump'
+    
+    # Look for possible text strings in the ROM for additional identification
+    try:
+        # Search for common text patterns in the first 1KB
+        search_data = data[:1024].decode('ascii', errors='ignore').lower()
+        
+        # Look for game-related strings
+        if 'atari' in search_data:
+            out['contains_atari_text'] = 'Yes'
+        else:
+            out['contains_atari_text'] = 'No'
+            
+        if 'jaguar' in search_data:
+            out['contains_jaguar_text'] = 'Yes'
+        else:
+            out['contains_jaguar_text'] = 'No'
+            
+    except:
+        out['contains_atari_text'] = 'Unknown'
+        out['contains_jaguar_text'] = 'Unknown'
+    
+    # identify game from database using CRC32
+    if checksum in db['AtariJaguar']:
+        gamedb_entry = db['AtariJaguar'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify Atari Lynx game
+def identify_atari_lynx(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # check if this is an LNX file (with header) or LYX file (raw ROM)
+    if data[:4] == ATARI_LYNX_MAGIC:
+        # LNX format with 64-byte header
+        out['format'] = 'LNX (with header)'
+        out['header_size'] = ATARI_LYNX_HEADER_SIZE
+        
+        # extract header information
+        header = data[:ATARI_LYNX_HEADER_SIZE]
+        
+        # parse cart name (null-terminated string at offset 0x0A)
+        cart_name_start = 10
+        cart_name_end = cart_name_start
+        while cart_name_end < 32 and header[cart_name_end] != 0:
+            cart_name_end += 1
+        if cart_name_end > cart_name_start:
+            out['cart_name'] = header[cart_name_start:cart_name_end].decode('ascii', errors='ignore')
+        
+        # parse manufacturer (null-terminated string at offset 0x2A)
+        manufacturer_start = 42
+        manufacturer_end = manufacturer_start
+        while manufacturer_end < 64 and header[manufacturer_end] != 0:
+            manufacturer_end += 1
+        if manufacturer_end > manufacturer_start:
+            out['manufacturer'] = header[manufacturer_start:manufacturer_end].decode('ascii', errors='ignore')
+        
+        # ROM data starts after header
+        rom_data = data[ATARI_LYNX_HEADER_SIZE:]
+        rom_size = len(rom_data)
+        out['rom_size'] = rom_size
+        
+        # determine ROM size category
+        if rom_size in ATARI_LYNX_ROM_SIZES:
+            out['rom_size_category'] = ATARI_LYNX_ROM_SIZES[rom_size]
+            out['valid_size'] = 'Yes'
+        else:
+            out['rom_size_category'] = 'Unknown'
+            out['valid_size'] = 'No'
+        
+        # calculate CRC32 of ROM data (excluding header)
+        checksum = crc32(rom_data)
+        
+    else:
+        # LYX format (raw ROM dump)
+        out['format'] = 'LYX (raw ROM)'
+        out['header_size'] = 0
+        
+        # determine ROM size category
+        if file_size in ATARI_LYNX_ROM_SIZES:
+            out['rom_size_category'] = ATARI_LYNX_ROM_SIZES[file_size]
+            out['valid_size'] = 'Yes'
+        else:
+            out['rom_size_category'] = 'Unknown'
+            out['valid_size'] = 'No'
+        
+        out['rom_size'] = file_size
+        rom_data = data
+        
+        # calculate CRC32 of ROM data
+        checksum = crc32(rom_data)
+    
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # identify game from database using CRC32 of ROM data
+    if checksum in db['AtariLynx']:
+        gamedb_entry = db['AtariLynx'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify WonderSwan/WonderSwan Color game
+def identify_wonderswan(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in WONDERSWAN_ROM_SIZES:
+        out['rom_size_category'] = WONDERSWAN_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # WonderSwan header is in the last 10 bytes of the ROM
+    if file_size >= WONDERSWAN_HEADER_SIZE:
+        header = data[-WONDERSWAN_HEADER_SIZE:]
+        
+        # Parse header fields (based on WonderSwan specifications)
+        # Byte 0: Developer ID (high byte)
+        # Byte 1: Developer ID (low byte) 
+        # Byte 2: Minimum system (0x00 = WonderSwan, 0x01 = WonderSwan Color)
+        # Byte 3: Cart type/mapper
+        # Byte 4: ROM size code
+        # Byte 5: SRAM size code
+        # Byte 6: Orientation/speed (bit 0 = orientation, bits 1-3 = speed)
+        # Byte 7: RTC flag
+        # Byte 8: Checksum (high byte)
+        # Byte 9: Checksum (low byte)
+        
+        developer_id = (header[0] << 8) | header[1]
+        out['developer_id'] = f'0x{developer_id:04X}'
+        
+        min_system = header[2]
+        if min_system == 0x00:
+            out['min_system'] = 'WonderSwan (Mono)'
+        elif min_system == 0x01:
+            out['min_system'] = 'WonderSwan Color'
+        else:
+            out['min_system'] = f'Unknown (0x{min_system:02X})'
+        
+        cart_type = header[3]
+        if cart_type in WONDERSWAN_MAPPER_TYPES:
+            out['mapper_type'] = WONDERSWAN_MAPPER_TYPES[cart_type]
+        else:
+            out['mapper_type'] = f'Unknown (0x{cart_type:02X})'
+        
+        rom_size_code = header[4]
+        out['rom_size_code'] = f'0x{rom_size_code:02X}'
+        
+        sram_size_code = header[5]
+        out['sram_size_code'] = f'0x{sram_size_code:02X}'
+        
+        orientation_speed = header[6]
+        orientation = orientation_speed & 0x01
+        speed = (orientation_speed >> 1) & 0x07
+        
+        if orientation in WONDERSWAN_ORIENTATIONS:
+            out['orientation'] = WONDERSWAN_ORIENTATIONS[orientation]
+        else:
+            out['orientation'] = 'Unknown'
+        out['speed'] = speed
+        
+        rtc_flag = header[7]
+        out['rtc_present'] = 'Yes' if rtc_flag != 0 else 'No'
+        
+        checksum = header[8] | (header[9] << 8)  # little-endian
+        out['header_checksum'] = f'0x{checksum:04X}'
+        
+        # Verify checksum (sum of all ROM bytes except checksum should equal checksum)
+        calculated_checksum = sum(data[:-2]) & 0xFFFF
+        out['calculated_checksum'] = f'0x{calculated_checksum:04X}'
+        out['checksum_valid'] = 'Yes' if calculated_checksum == checksum else 'No'
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Check file extension to determine system type
+    ext = get_extension(fn).lower()
+    if ext == 'ws':
+        system_type = 'WonderSwan'
+    elif ext == 'wsc':
+        system_type = 'WonderSwanColor'
+    else:
+        system_type = 'WonderSwan'  # default
+    
+    # Identify game from database using CRC32
+    if system_type in db and checksum in db[system_type]:
+        gamedb_entry = db[system_type][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify ColecoVision game
+def identify_colecovision(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in COLECOVISION_ROM_SIZES:
+        out['rom_size_category'] = COLECOVISION_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Check for ColecoVision signature (0xAA55 or 0x55AA at start)
+    if len(data) >= 2 and (data[:2] == COLECOVISION_MAGIC_1 or data[:2] == COLECOVISION_MAGIC_2):
+        out['signature_valid'] = 'Yes'
+        
+        # ColecoVision ROM header structure:
+        # 0x0000-0x0001: Signature (0xAA55)
+        # 0x0002-0x0007: Padding (usually 0x00)
+        # 0x0008-0x0009: Start address pointer
+        # 0x000A-0x001F: RST vectors (interrupts)
+        
+        if len(data) >= 10:
+            # Extract start address (little-endian at offset 0x08)
+            start_addr = data[8] | (data[9] << 8)
+            out['start_address'] = f'0x{start_addr:04X}'
+        
+        # Look for title string in ROM (typically appears early in ROM)
+        try:
+            # Search for ASCII text in first 1KB that might be the title
+            search_data = data[:1024]
+            
+            # Find printable ASCII strings of reasonable length
+            title_candidates = []
+            current_string = ""
+            for i, byte in enumerate(search_data):
+                if 32 <= byte <= 126:  # printable ASCII
+                    current_string += chr(byte)
+                else:
+                    if len(current_string) >= 6:  # reasonable title length
+                        title_candidates.append(current_string)
+                    current_string = ""
+            
+            # Add final string if it exists
+            if len(current_string) >= 6:
+                title_candidates.append(current_string)
+            
+            # Filter for likely title strings (avoid common assembly patterns)
+            filtered_titles = []
+            for title in title_candidates[:5]:  # check first 5 candidates
+                # Skip strings that look like assembly code or common patterns
+                if not any(pattern in title.upper() for pattern in ['RST', 'NOP', 'JP', 'CALL', 'RET', 'LD', 'INC', 'DEC']):
+                    filtered_titles.append(title)
+            
+            if filtered_titles:
+                out['potential_title'] = filtered_titles[0]
+        
+        except:
+            pass
+            
+    else:
+        out['signature_valid'] = 'No'
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['ColecoVision']:
+        gamedb_entry = db['ColecoVision'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify PC Engine/TurboGrafx-16 game
+def identify_pcengine(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in PCENGINE_ROM_SIZES:
+        out['rom_size_category'] = PCENGINE_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # PC Engine ROMs are raw binary dumps without standard headers
+    # We can try to detect some patterns or characteristics
+    out['format'] = 'Raw ROM dump'
+    
+    # Check file extension to determine system type
+    ext = get_extension(fn).lower()
+    if ext == 'pce':
+        system_type = 'PCEngine'
+    elif ext == 'sgx':
+        system_type = 'PCEngineSuperGrafx'
+        out['system_variant'] = 'SuperGrafx'
+    else:
+        system_type = 'PCEngine'  # default
+    
+    # Look for potential game characteristics in the ROM
+    try:
+        # PC Engine uses 6502-based HuC6280 CPU
+        # Common patterns: interrupt vectors, initialization code
+        
+        # Check for common PC Engine initialization patterns
+        search_data = data[:1024]  # first 1KB
+        
+        # Look for common 6502/HuC6280 opcodes and patterns
+        common_opcodes = [0x78, 0xD8, 0xA9, 0x8D]  # SEI, CLD, LDA #, STA abs
+        opcode_count = sum(1 for byte in search_data[:100] if byte in common_opcodes)
+        out['cpu_pattern_score'] = opcode_count
+        
+        # Look for text strings that might indicate PC Engine games
+        text_search = data[:2048].decode('ascii', errors='ignore').upper()
+        pc_engine_indicators = ['HUDSON', 'NEC', 'TURBO', 'PCE']
+        found_indicators = [indicator for indicator in pc_engine_indicators if indicator in text_search]
+        if found_indicators:
+            out['detected_indicators'] = ', '.join(found_indicators)
+        
+    except:
+        pass
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if system_type in db and checksum in db[system_type]:
+        gamedb_entry = db[system_type][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify Game Gear game
+def identify_gamegear(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in GAMEGEAR_ROM_SIZES:
+        out['rom_size_category'] = GAMEGEAR_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Look for TMR SEGA header at common locations
+    header_found = False
+    header_location = None
+    
+    for location in GAMEGEAR_HEADER_LOCATIONS:
+        if location < file_size and location + 16 <= file_size:
+            if data[location:location + 8] == GAMEGEAR_TMR_SEGA_MAGIC:
+                header_found = True
+                header_location = location
+                break
+    
+    if header_found:
+        out['header_found'] = 'Yes'
+        out['header_location'] = f'0x{header_location:04X}'
+        
+        # Parse TMR SEGA header (16 bytes total)
+        header = data[header_location:header_location + 16]
+        
+        # Bytes 0-7: "TMR SEGA" signature
+        # Bytes 8-9: Reserved (usually 0x0000)
+        # Bytes 10-11: Checksum
+        # Bytes 12: Product code (BCD) - tens digit
+        # Bytes 13: Product code (BCD) - units and version
+        # Bytes 14: Region/ROM size code
+        # Bytes 15: Reserved
+        
+        # Extract checksum
+        checksum = (header[10] | (header[11] << 8))
+        out['header_checksum'] = f'0x{checksum:04X}'
+        
+        # Extract product code
+        product_code_tens = header[12] >> 4
+        product_code_units = header[12] & 0x0F
+        version = header[13] >> 4
+        product_code_lower = header[13] & 0x0F
+        
+        if product_code_tens < 10 and product_code_units < 10 and product_code_lower < 10:
+            product_code = product_code_tens * 1000 + product_code_units * 100 + product_code_lower * 10 + version
+            out['product_code'] = f'{product_code:04d}'
+            out['version'] = version
+        
+        # Extract region/ROM size info
+        region_rom_size = header[14]
+        
+        # Region bits (upper 4 bits)
+        region_code = (region_rom_size >> 4) & 0x0F
+        region_map = {
+            3: 'SMS Japan',
+            4: 'SMS Export',
+            5: 'Game Gear Japan',
+            6: 'Game Gear Export',
+            7: 'Game Gear International'
+        }
+        
+        if region_code in region_map:
+            out['region'] = region_map[region_code]
+        else:
+            out['region'] = f'Unknown (0x{region_code:X})'
+        
+        # ROM size bits (lower 4 bits)
+        rom_size_code = region_rom_size & 0x0F
+        rom_size_map = {
+            0xA: '8KB',   0xB: '16KB',  0xC: '32KB',  0xD: '48KB',
+            0xE: '64KB',  0xF: '128KB', 0x0: '256KB', 0x1: '512KB',
+            0x2: '1MB'
+        }
+        
+        if rom_size_code in rom_size_map:
+            out['header_rom_size'] = rom_size_map[rom_size_code]
+        else:
+            out['header_rom_size'] = f'Unknown (0x{rom_size_code:X})'
+        
+        # Verify header checksum (simple sum of all ROM bytes except checksum)
+        calculated_checksum = 0
+        for i in range(file_size):
+            if i < header_location + 10 or i >= header_location + 12:  # skip checksum bytes
+                calculated_checksum = (calculated_checksum + data[i]) & 0xFFFF
+        
+        out['calculated_checksum'] = f'0x{calculated_checksum:04X}'
+        out['checksum_valid'] = 'Yes' if calculated_checksum == checksum else 'No'
+        
+    else:
+        out['header_found'] = 'No'
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['GameGear']:
+        gamedb_entry = db['GameGear'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify Master System game
+def identify_mastersystem(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in MASTERSYSTEM_ROM_SIZES:
+        out['rom_size_category'] = MASTERSYSTEM_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Look for TMR SEGA header at common locations
+    header_found = False
+    header_location = None
+    
+    for location in MASTERSYSTEM_HEADER_LOCATIONS:
+        if location < file_size and location + 16 <= file_size:
+            if data[location:location + 8] == MASTERSYSTEM_TMR_SEGA_MAGIC:
+                header_found = True
+                header_location = location
+                break
+    
+    if header_found:
+        out['header_found'] = 'Yes'
+        out['header_location'] = f'0x{header_location:04X}'
+        
+        # Parse TMR SEGA header (16 bytes total)
+        header = data[header_location:header_location + 16]
+        
+        # Bytes 0-7: "TMR SEGA" signature  
+        # Bytes 8-9: Reserved (usually 0x2020 for SMS)
+        # Bytes 10-11: Checksum
+        # Bytes 12: Product code (BCD) - tens digit
+        # Bytes 13: Product code (BCD) - units and version
+        # Bytes 14: Region/ROM size code
+        # Bytes 15: Reserved
+        
+        # Extract checksum
+        checksum = (header[10] | (header[11] << 8))
+        out['header_checksum'] = f'0x{checksum:04X}'
+        
+        # Extract product code (same format as Game Gear)
+        product_code_tens = header[12] >> 4
+        product_code_units = header[12] & 0x0F
+        version = header[13] >> 4
+        product_code_lower = header[13] & 0x0F
+        
+        if product_code_tens < 10 and product_code_units < 10 and product_code_lower < 10:
+            product_code = product_code_tens * 1000 + product_code_units * 100 + product_code_lower * 10 + version
+            out['product_code'] = f'{product_code:04d}'
+            out['version'] = version
+        
+        # Extract region/ROM size info
+        region_rom_size = header[14]
+        
+        # Region bits (upper 4 bits)
+        region_code = (region_rom_size >> 4) & 0x0F
+        region_map = {
+            3: 'SMS Japan',
+            4: 'SMS Export',
+            5: 'Game Gear Japan',
+            6: 'Game Gear Export', 
+            7: 'Game Gear International'
+        }
+        
+        if region_code in region_map:
+            out['region'] = region_map[region_code]
+        else:
+            out['region'] = f'Unknown (0x{region_code:X})'
+        
+        # ROM size bits (lower 4 bits)
+        rom_size_code = region_rom_size & 0x0F
+        rom_size_map = {
+            0xA: '8KB',   0xB: '16KB',  0xC: '32KB',  0xD: '48KB',
+            0xE: '64KB',  0xF: '128KB', 0x0: '256KB', 0x1: '512KB',
+            0x2: '1MB'
+        }
+        
+        if rom_size_code in rom_size_map:
+            out['header_rom_size'] = rom_size_map[rom_size_code]
+        else:
+            out['header_rom_size'] = f'Unknown (0x{rom_size_code:X})'
+        
+        # Verify header checksum (simple sum of all ROM bytes except checksum)
+        calculated_checksum = 0
+        for i in range(file_size):
+            if i < header_location + 10 or i >= header_location + 12:  # skip checksum bytes
+                calculated_checksum = (calculated_checksum + data[i]) & 0xFFFF
+        
+        out['calculated_checksum'] = f'0x{calculated_checksum:04X}'
+        out['checksum_valid'] = 'Yes' if calculated_checksum == checksum else 'No'
+        
+    else:
+        out['header_found'] = 'No'
+        # Many Master System ROMs don't have headers, this is normal
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['MasterSystem']:
+        gamedb_entry = db['MasterSystem'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify Sega 32X game
+def identify_sega32x(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in SEGA32X_ROM_SIZES:
+        out['rom_size_category'] = SEGA32X_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Check for Sega 32X header at standard Genesis location (0x100)
+    if file_size > SEGA32X_HEADER_OFFSET + 16:
+        header_data = data[SEGA32X_HEADER_OFFSET:SEGA32X_HEADER_OFFSET + 8]
+        
+        if header_data == SEGA32X_MAGIC:
+            out['header_found'] = 'Yes'
+            out['console_name'] = header_data.decode('ascii', errors='ignore')
+            
+            # Extract Genesis-style header information (32X uses Genesis header format)
+            # 0x100-0x10F: Console name "SEGA 32X"
+            # 0x110-0x11F: Copyright notice
+            # 0x120-0x14F: Domestic title
+            # 0x150-0x17F: International title  
+            # 0x180-0x18D: Serial number
+            # 0x18E-0x18F: Checksum
+            # 0x190-0x19F: Device support
+            # 0x1A0-0x1A7: ROM start/end addresses
+            # 0x1A8-0x1AF: RAM start/end addresses
+            # 0x1F0-0x1FF: Region support
+            
+            header_end = min(file_size, SEGA32X_HEADER_OFFSET + 256)
+            full_header = data[SEGA32X_HEADER_OFFSET:header_end]
+            
+            # Extract copyright notice (0x110-0x11F)
+            if len(full_header) >= 32:
+                copyright_data = full_header[16:32]
+                copyright_str = copyright_data.decode('ascii', errors='ignore').strip()
+                if copyright_str:
+                    out['copyright'] = copyright_str
+            
+            # Extract domestic title (0x120-0x14F)
+            if len(full_header) >= 80:
+                domestic_title = full_header[32:80].decode('ascii', errors='ignore').strip()
+                if domestic_title:
+                    out['domestic_title'] = domestic_title
+            
+            # Extract international title (0x150-0x17F)
+            if len(full_header) >= 128:
+                intl_title = full_header[80:128].decode('ascii', errors='ignore').strip()
+                if intl_title:
+                    out['international_title'] = intl_title
+            
+            # Extract serial number (0x180-0x18D)
+            if len(full_header) >= 142:
+                serial = full_header[128:142].decode('ascii', errors='ignore').strip()
+                if serial:
+                    out['serial_number'] = serial
+            
+            # Extract checksum (0x18E-0x18F)
+            if len(full_header) >= 144:
+                checksum_bytes = full_header[142:144]
+                checksum = (checksum_bytes[0] << 8) | checksum_bytes[1]
+                out['header_checksum'] = f'0x{checksum:04X}'
+            
+            # Extract region support (0x1F0-0x1FF)
+            if len(full_header) >= 256:
+                region_data = full_header[240:256].decode('ascii', errors='ignore').strip()
+                if region_data:
+                    out['region_support'] = region_data
+                    
+                    # Decode common region codes
+                    regions = []
+                    if 'J' in region_data:
+                        regions.append('Japan')
+                    if 'U' in region_data:
+                        regions.append('USA')
+                    if 'E' in region_data:
+                        regions.append('Europe')
+                    if regions:
+                        out['regions'] = ', '.join(regions)
+        else:
+            out['header_found'] = 'No'
+    else:
+        out['header_found'] = 'No'
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['Sega32X']:
+        gamedb_entry = db['Sega32X'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify Nintendo FDS game
+def identify_nintendo_fds(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine disk size category
+    if file_size in NINTENDO_FDS_BLOCK_SIZES:
+        out['disk_size_category'] = NINTENDO_FDS_BLOCK_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['disk_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Check for Nintendo FDS header signature
+    if len(data) >= len(NINTENDO_FDS_MAGIC):
+        if data[:len(NINTENDO_FDS_MAGIC)] == NINTENDO_FDS_MAGIC:
+            out['header_found'] = 'Yes'
+            out['format'] = 'FDS disk image'
+            
+            # Parse FDS disk header (Block 1 - Disk Info Block)
+            if len(data) >= 56:
+                # Disk info starts after the signature
+                header = data[15:]  # Skip signature
+                
+                # Manufacturer ID (1 byte at offset 15)
+                manufacturer_id = header[0] if len(header) > 0 else 0
+                out['manufacturer_id'] = f'0x{manufacturer_id:02X}'
+                
+                # Game name (3 bytes at offset 16-18)
+                if len(header) >= 4:
+                    game_name_bytes = header[1:4]
+                    game_name = ''.join([chr(b) if 32 <= b <= 126 else '?' for b in game_name_bytes])
+                    out['game_name_code'] = game_name
+                
+                # Version (1 byte at offset 19)
+                if len(header) >= 5:
+                    version = header[4]
+                    out['version'] = version
+                
+                # Disk side (1 byte at offset 20)
+                if len(header) >= 6:
+                    disk_side = header[5]
+                    out['disk_side'] = disk_side
+                    out['disk_side_desc'] = 'Side A' if disk_side == 0 else 'Side B'
+                
+                # Disk number (1 byte at offset 21)
+                if len(header) >= 7:
+                    disk_number = header[6]
+                    out['disk_number'] = disk_number
+                
+                # Actual disk sides (1 byte at offset 22)
+                if len(header) >= 8:
+                    actual_disk_sides = header[7]
+                    out['actual_disk_sides'] = actual_disk_sides
+                
+                # Boot file ID (1 byte at offset 23)
+                if len(header) >= 9:
+                    boot_file_id = header[8]
+                    out['boot_file_id'] = boot_file_id
+                
+                # Manufacturing date (5 bytes at offset 31-35)
+                if len(header) >= 21:
+                    mfg_date_bytes = header[16:21]
+                    # Convert from BCD format
+                    try:
+                        year = ((mfg_date_bytes[0] >> 4) * 10 + (mfg_date_bytes[0] & 0x0F)) + 1925
+                        month = (mfg_date_bytes[1] >> 4) * 10 + (mfg_date_bytes[1] & 0x0F)
+                        day = (mfg_date_bytes[2] >> 4) * 10 + (mfg_date_bytes[2] & 0x0F)
+                        if 1 <= month <= 12 and 1 <= day <= 31:
+                            out['manufacturing_date'] = f'{year:04d}-{month:02d}-{day:02d}'
+                    except:
+                        pass
+                
+                # Look for disk manufacturer name in header
+                if len(data) >= 100:
+                    # Search for common FDS manufacturer strings
+                    search_area = data[40:100]
+                    try:
+                        search_text = search_area.decode('ascii', errors='ignore').upper()
+                        if 'NINTENDO' in search_text:
+                            out['publisher'] = 'Nintendo'
+                    except:
+                        pass
+        else:
+            out['header_found'] = 'No'
+            out['format'] = 'Unknown FDS format'
+    else:
+        out['header_found'] = 'No'
+        out['format'] = 'File too small'
+    
+    # Calculate CRC32 of entire disk image for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['NintendoFDS']:
+        gamedb_entry = db['NintendoFDS'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# GCE Vectrex constants
+VECTREX_ROM_SIZES = {
+    4096: '4KB',      # 4 KB
+    8192: '8KB',      # 8 KB
+    12288: '12KB',    # 12 KB (rare)
+    16384: '16KB',    # 16 KB (rare)
+}
+
+# SNK Neo Geo Pocket constants
+NGP_ROM_SIZES = {
+    131072: '128KB',     # 128 KB
+    262144: '256KB',     # 256 KB
+    524288: '512KB',     # 512 KB
+    1048576: '1MB',      # 1 MB
+    2097152: '2MB',      # 2 MB
+    4194304: '4MB',      # 4 MB
+}
+
+# Nintendo Sufami Turbo constants
+SUFAMI_TURBO_ROM_SIZES = {
+    524288: '512KB',     # 512 KB (4 Mbit)
+    1048576: '1MB',      # 1 MB (8 Mbit)
+}
+
+# identify Nintendo Sufami Turbo game
+def identify_sufami_turbo(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in SUFAMI_TURBO_ROM_SIZES:
+        out['rom_size_category'] = SUFAMI_TURBO_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Sufami Turbo is a SNES add-on system by Bandai
+    out['format'] = 'Sufami Turbo ROM'
+    out['processor'] = 'Ricoh 5A22 (65816)'
+    out['system'] = 'Super Famicom + Sufami Turbo'
+    out['manufacturer'] = 'Bandai'
+    
+    # Check for Sufami Turbo header
+    try:
+        if len(data) >= 16:
+            header = data[:16].decode('ascii', errors='ignore')
+            if 'BANDAI SFC-ADX' in header:
+                out['header_valid'] = 'Yes'
+                out['header_signature'] = 'BANDAI SFC-ADX'
+            else:
+                out['header_valid'] = 'No'
+    except:
+        out['header_valid'] = 'No'
+    
+    # Try to extract title from filename
+    try:
+        import os
+        filename = os.path.basename(fn)
+        if filename.endswith('.st'):
+            potential_title = filename[:-3]
+            if ' (Japan)' in potential_title:
+                potential_title = potential_title.replace(' (Japan)', '')
+            out['potential_title'] = potential_title.strip()
+    except:
+        pass
+        
+    # Calculate CRC32
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Database lookup
+    if checksum in db['SufamiTurbo']:
+        gamedb_entry = db['SufamiTurbo'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# Sega PICO constants
+SEGA_PICO_ROM_SIZES = {
+    131072: '128KB',     # 128 KB
+    262144: '256KB',     # 256 KB
+    524288: '512KB',     # 512 KB
+    1048576: '1MB',      # 1 MB
+}
+
+# identify Sega PICO game
+def identify_sega_pico(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in SEGA_PICO_ROM_SIZES:
+        out['rom_size_category'] = SEGA_PICO_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Sega PICO educational system
+    out['format'] = 'Sega PICO ROM'
+    out['processor'] = 'Motorola 68000'
+    out['system'] = 'Sega PICO'
+    out['target_audience'] = 'Educational/Children'
+    
+    # Try to extract title from filename
+    try:
+        import os
+        filename = os.path.basename(fn)
+        if filename.endswith('.md'):
+            potential_title = filename[:-3]
+            if ' (Japan)' in potential_title:
+                potential_title = potential_title.replace(' (Japan)', '')
+            if ' (USA)' in potential_title:
+                potential_title = potential_title.replace(' (USA)', '')
+            out['potential_title'] = potential_title.strip()
+    except:
+        pass
+        
+    # Calculate CRC32
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Database lookup
+    if checksum in db['SegaPico']:
+        gamedb_entry = db['SegaPico'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# Commodore Amiga constants  
+AMIGA_ROM_SIZES = {
+    524288: '512KB',     # 512 KB
+    1048576: '1MB',      # 1 MB
+    2097152: '2MB',      # 2 MB
+}
+
+# identify Commodore Amiga game
+def identify_amiga(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in AMIGA_ROM_SIZES:
+        out['rom_size_category'] = AMIGA_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Commodore Amiga system
+    out['format'] = 'Amiga Disk Image'
+    out['processor'] = 'Motorola 68000'
+    out['system'] = 'Commodore Amiga'
+    
+    # Try to extract title from filename
+    try:
+        import os
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            potential_title = filename.rsplit('.', 1)[0]
+            if ' (Europe)' in potential_title:
+                potential_title = potential_title.replace(' (Europe)', '')
+            out['potential_title'] = potential_title.strip()
+    except:
+        pass
+        
+    # Calculate CRC32
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Database lookup
+    if checksum in db['Amiga']:
+        gamedb_entry = db['Amiga'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# MSX constants
+MSX_ROM_SIZES = {
+    8192: '8KB',         # 8 KB
+    16384: '16KB',       # 16 KB
+    32768: '32KB',       # 32 KB
+    65536: '64KB',       # 64 KB
+    131072: '128KB',     # 128 KB
+    262144: '256KB',     # 256 KB
+    524288: '512KB',     # 512 KB
+}
+
+# identify Microsoft MSX game
+def identify_msx(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in MSX_ROM_SIZES:
+        out['rom_size_category'] = MSX_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # MSX system
+    out['format'] = 'MSX ROM'
+    out['processor'] = 'Zilog Z80A'
+    out['system'] = 'Microsoft MSX'
+    
+    # Try to extract title from filename
+    try:
+        import os
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            potential_title = filename.rsplit('.', 1)[0]
+            if ' (Japan)' in potential_title:
+                potential_title = potential_title.replace(' (Japan)', '')
+            out['potential_title'] = potential_title.strip()
+    except:
+        pass
+        
+    # Calculate CRC32
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Database lookup
+    if checksum in db['MSX']:
+        gamedb_entry = db['MSX'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify Microsoft MSX2 game
+def identify_msx2(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in MSX_ROM_SIZES:
+        out['rom_size_category'] = MSX_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # MSX2 system
+    out['format'] = 'MSX2 ROM'
+    out['processor'] = 'Zilog Z80A'
+    out['system'] = 'Microsoft MSX2'
+    
+    # Try to extract title from filename
+    try:
+        import os
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            potential_title = filename.rsplit('.', 1)[0]
+            if ' (Japan)' in potential_title:
+                potential_title = potential_title.replace(' (Japan)', '')
+            out['potential_title'] = potential_title.strip()
+    except:
+        pass
+        
+    # Calculate CRC32
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Database lookup
+    if checksum in db['MSX2']:
+        gamedb_entry = db['MSX2'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# Low priority systems with basic implementations
+def identify_casio_loopy(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    import os
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    out = {'file_size': len(data), 'format': 'Casio Loopy ROM', 'processor': 'SH-1', 'system': 'Casio Loopy'}
+    try:
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            out['potential_title'] = filename.rsplit('.', 1)[0].replace(' (Japan)', '').strip()
+    except: pass
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    if checksum in db['CasioLoopy']:
+        gamedb_entry = db['CasioLoopy'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb: out[k] = v
+    return out
+
+def identify_tiger_gamecom(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    import os
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    out = {'file_size': len(data), 'format': 'Tiger Game.com ROM', 'processor': 'Sharp SM8521', 'system': 'Tiger Game.com'}
+    try:
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            out['potential_title'] = filename.rsplit('.', 1)[0].replace(' (USA)', '').strip()
+    except: pass
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    if checksum in db['GameCom']:
+        gamedb_entry = db['GameCom'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb: out[k] = v
+    return out
+
+def identify_watara_supervision(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    import os
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    out = {'file_size': len(data), 'format': 'Watara Supervision ROM', 'processor': '65C02', 'system': 'Watara Supervision'}
+    try:
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            out['potential_title'] = filename.rsplit('.', 1)[0].replace(' (Europe)', '').strip()
+    except: pass
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    if checksum in db['Supervision']:
+        gamedb_entry = db['Supervision'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb: out[k] = v
+    return out
+
+def identify_welback_megaduck(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    import os
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    out = {'file_size': len(data), 'format': 'Welback Mega Duck ROM', 'processor': 'Sharp LR35902', 'system': 'Welback Mega Duck'}
+    try:
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            out['potential_title'] = filename.rsplit('.', 1)[0].replace(' (Europe)', '').strip()
+    except: pass
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    if checksum in db['MegaDuck']:
+        gamedb_entry = db['MegaDuck'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb: out[k] = v
+    return out
+
+def identify_fujitsu_fmtowns(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    import os
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    out = {'file_size': len(data), 'format': 'FM Towns CD-ROM', 'processor': 'Intel 80386DX', 'system': 'Fujitsu FM Towns'}
+    try:
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            out['potential_title'] = filename.rsplit('.', 1)[0].replace(' (Japan)', '').strip()
+    except: pass
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    if checksum in db['FMTowns']:
+        gamedb_entry = db['FMTowns'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb: out[k] = v
+    return out
+
+def identify_nec_pc98(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    import os
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    out = {'file_size': len(data), 'format': 'PC-98 Disk Image', 'processor': 'Intel 8086/80286', 'system': 'NEC PC-9801'}
+    try:
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            out['potential_title'] = filename.rsplit('.', 1)[0].replace(' (Japan)', '').strip()
+    except: pass
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    if checksum in db['PC98']:
+        gamedb_entry = db['PC98'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb: out[k] = v
+    return out
+
+# Nintendo 64DD constants
+N64DD_ROM_SIZES = {
+    64931840: '62MB',    # Standard 64DD disk size (approximately 64MB)
+}
+
+# identify Nintendo 64DD game
+def identify_n64dd(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in N64DD_ROM_SIZES:
+        out['rom_size_category'] = N64DD_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Nintendo 64DD disk format
+    out['format'] = 'Nintendo 64DD Disk Image'
+    out['processor'] = 'NEC VR4300 (64-bit MIPS)'
+    out['system'] = 'Nintendo 64 + 64DD'
+    out['media_type'] = 'Magnetic Disk'
+    out['capacity'] = '64MB per disk'
+    
+    # Check for 64DD disk header pattern
+    try:
+        # 64DD disks have a specific header pattern at the beginning
+        if len(data) >= 16:
+            header = data[:16]
+            # Look for the common 64DD disk pattern
+            if header[0:2] == bytes([0xe8, 0x48]):
+                out['header_valid'] = 'Yes'
+                out['disk_format'] = '64DD Magnetic Disk'
+            else:
+                out['header_valid'] = 'No'
+                
+        # Try to extract some disk metadata
+        if len(data) >= 32:
+            # Look for system area information
+            out['system_area'] = 'Present'
+            
+    except:
+        out['header_valid'] = 'No'
+    
+    # Try to extract title from filename for identification
+    try:
+        import os
+        filename = os.path.basename(fn)
+        if filename.endswith('.ndd'):
+            potential_title = filename[:-4]  # Remove .ndd extension
+            # Clean up No-Intro naming convention
+            if ' (Japan)' in potential_title:
+                potential_title = potential_title.replace(' (Japan)', '')
+            if ' (USA)' in potential_title:
+                potential_title = potential_title.replace(' (USA)', '')
+            # Remove version indicators
+            import re
+            potential_title = re.sub(r' \(Proto\)$', '', potential_title)
+            potential_title = re.sub(r' \(Beta\).*$', '', potential_title)
+            potential_title = re.sub(r' \(Demo\).*$', '', potential_title)
+            potential_title = re.sub(r' \[b\]$', '', potential_title)
+            out['potential_title'] = potential_title.strip()
+    except:
+        pass
+        
+    # Calculate CRC32 of entire disk image for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['N64DD']:
+        gamedb_entry = db['N64DD'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# Nintendo Satellaview constants
+SATELLAVIEW_ROM_SIZES = {
+    131072: '128KB',     # 128 KB (1 Mbit)
+    262144: '256KB',     # 256 KB (2 Mbit)
+    524288: '512KB',     # 512 KB (4 Mbit)
+    1048576: '1MB',      # 1 MB (8 Mbit)
+    2097152: '2MB',      # 2 MB (16 Mbit)
+    4194304: '4MB',      # 4 MB (32 Mbit)
+}
+
+# identify Nintendo Satellaview game
+def identify_satellaview(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in SATELLAVIEW_ROM_SIZES:
+        out['rom_size_category'] = SATELLAVIEW_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Satellaview ROMs are SNES-based with special broadcast features
+    out['format'] = 'Satellaview ROM'
+    out['processor'] = 'Ricoh 5A22 (65816)'
+    out['system'] = 'Nintendo Satellaview (BS-X)'
+    out['broadcast_system'] = 'St.GIGA satellite'
+    
+    # Try to extract title from filename for identification
+    try:
+        import os
+        filename = os.path.basename(fn)
+        if filename.endswith('.bs'):
+            potential_title = filename[:-3]  # Remove .bs extension
+            # Clean up No-Intro naming convention
+            if ' (Japan)' in potential_title:
+                potential_title = potential_title.replace(' (Japan)', '')
+            # Check for special types
+            if '(Magazine)' in potential_title:
+                out['content_type'] = 'Digital Magazine'
+                potential_title = potential_title.replace(' (Magazine)', '')
+            elif '(SoundLink)' in potential_title:
+                out['content_type'] = 'SoundLink Game'
+                potential_title = potential_title.replace(' (SoundLink)', '')
+            elif '(Data Pack)' in potential_title:
+                out['content_type'] = 'Data Pack'
+                potential_title = potential_title.replace(' (Data Pack)', '')
+            elif '(Memory Pack)' in potential_title:
+                out['content_type'] = 'Memory Pack'
+                potential_title = potential_title.replace(' (Memory Pack)', '')
+            elif '(Demo)' in potential_title:
+                out['content_type'] = 'Demo'
+                potential_title = potential_title.replace(' (Demo)', '')
+            else:
+                out['content_type'] = 'Game'
+            
+            out['potential_title'] = potential_title.strip()
+    except:
+        pass
+        
+    # Satellaview ROMs don't have traditional SNES headers
+    # They use a different structure for broadcast identification
+    out['header_format'] = 'BS-X Header'
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['Satellaview']:
+        gamedb_entry = db['Satellaview'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# Atari ST constants
+ATARIST_ROM_SIZES = {
+    468252: '456KB',      # Standard single density disk
+    471664: '460KB',      # Single density disk variant
+    520242: '508KB',      # Double density disk
+    521027: '509KB',      # Double density disk variant
+    737280: '720KB',      # High density disk
+    901120: '880KB',      # Extended format
+}
+
+# identify Atari ST game
+def identify_atarist(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in ATARIST_ROM_SIZES:
+        out['rom_size_category'] = ATARIST_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Determine file format based on extension and content
+    ext = get_extension(fn).lower()
+    
+    if ext == 'ipf':
+        # IPF (Interchangeable Preservation Format) - check for CAPS header
+        out['format'] = 'IPF (Interchangeable Preservation Format)'
+        out['processor'] = 'Motorola 68000'
+        
+        try:
+            header = data[:4].decode('ascii', errors='ignore')
+            if header == 'CAPS':
+                out['header_valid'] = 'Yes'
+                out['preservation_format'] = 'CAPS/IPF'
+            else:
+                out['header_valid'] = 'No'
+        except:
+            out['header_valid'] = 'No'
+            
+    elif ext == 'st':
+        out['format'] = 'Atari ST Disk Image (ST)'
+        out['processor'] = 'Motorola 68000'
+        
+    elif ext == 'stx':
+        out['format'] = 'Atari ST Extended Disk Image (STX)'
+        out['processor'] = 'Motorola 68000'
+        
+    elif ext == 'msa':
+        out['format'] = 'Magic Shadow Archiver (MSA)'
+        out['processor'] = 'Motorola 68000'
+        
+    else:
+        out['format'] = 'Unknown Atari ST format'
+        out['processor'] = 'Motorola 68000'
+    
+    # Atari ST disk format information
+    out['media_type'] = '3.5" Floppy Disk'
+    out['system'] = 'Atari ST/STE/TT/Falcon'
+    
+    # Try to extract title from filename for identification
+    try:
+        import os
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            potential_title = filename.rsplit('.', 1)[0]  # Remove extension
+            # Clean up No-Intro naming convention
+            if ' (Europe)' in potential_title:
+                potential_title = potential_title.replace(' (Europe)', '')
+            if ' (USA)' in potential_title:
+                potential_title = potential_title.replace(' (USA)', '')
+            # Remove disk indicators
+            import re
+            potential_title = re.sub(r' \(Disk [^)]+\)$', '', potential_title)
+            out['potential_title'] = potential_title
+    except:
+        pass
+        
+    # Calculate CRC32 of entire file for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['AtariST']:
+        gamedb_entry = db['AtariST'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# Commodore 64 constants
+C64_ROM_SIZES = {
+    4096: '4KB',        # 4 KB cartridge
+    8192: '8KB',        # 8 KB cartridge
+    16384: '16KB',      # 16 KB cartridge
+    32768: '32KB',      # 32 KB cartridge
+    65536: '64KB',      # 64 KB cartridge
+    174848: '171KB',    # Standard D64 disk image
+}
+
+# identify Commodore 64 game
+def identify_c64(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in C64_ROM_SIZES:
+        out['rom_size_category'] = C64_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Determine file format based on extension and content
+    ext = get_extension(fn).lower()
+    
+    if ext == 'crt':
+        # Cartridge format - check for C64 CARTRIDGE header
+        out['format'] = 'C64 Cartridge (CRT)'
+        out['processor'] = 'MOS 6510'
+        
+        try:
+            header = data[:16].decode('ascii', errors='ignore')
+            if header.startswith('C64 CARTRIDGE'):
+                out['header_valid'] = 'Yes'
+                
+                # Extract cartridge type from header
+                if len(data) >= 0x17:
+                    cart_type = (data[0x16] << 8) | data[0x17]
+                    out['cartridge_type'] = f'{cart_type}'
+                    
+            else:
+                out['header_valid'] = 'No'
+        except:
+            out['header_valid'] = 'No'
+            
+    elif ext == 'prg':
+        out['format'] = 'C64 Program (PRG)'
+        out['processor'] = 'MOS 6510'
+        
+        # PRG files start with 2-byte load address
+        if len(data) >= 2:
+            load_addr = data[0] | (data[1] << 8)
+            out['load_address'] = f'${load_addr:04X}'
+            
+    elif ext == 'd64':
+        out['format'] = 'C64 Disk Image (D64)'
+        out['processor'] = 'MOS 6510'
+        out['media_type'] = '1541 Floppy Disk'
+        
+    elif ext == 'bin':
+        out['format'] = 'C64 Binary'
+        out['processor'] = 'MOS 6510'
+        
+    else:
+        out['format'] = 'Unknown C64 format'
+        out['processor'] = 'MOS 6510'
+    
+    # Try to extract title from filename for identification
+    try:
+        import os
+        filename = os.path.basename(fn)
+        if '.' in filename:
+            potential_title = filename.rsplit('.', 1)[0]  # Remove extension
+            # Clean up No-Intro naming convention
+            if ' (World)' in potential_title:
+                potential_title = potential_title.replace(' (World)', '')
+            if ' (USA, Europe)' in potential_title:
+                potential_title = potential_title.replace(' (USA, Europe)', '')
+            out['potential_title'] = potential_title
+    except:
+        pass
+        
+    # Calculate CRC32 of entire file for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['C64']:
+        gamedb_entry = db['C64'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# Nintendo Game & Watch constants
+GAMEWATCH_ROM_SIZES = {
+    1856: '1856B',    # 1856 bytes (early games)
+    4096: '4KB',      # 4 KB (later games)
+    8192: '8KB',      # 8 KB (rare)
+}
+
+# identify Nintendo Game & Watch game
+def identify_gamewatch(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in GAMEWATCH_ROM_SIZES:
+        out['rom_size_category'] = GAMEWATCH_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Game & Watch ROMs are raw microcontroller dumps
+    out['format'] = 'Raw microcontroller dump'
+    out['processor'] = 'Sharp SM5xx series'
+    
+    # These ROMs don't have standard headers, so we rely on filename parsing
+    # and database lookup via CRC32
+    try:
+        import os
+        filename = os.path.basename(fn)
+        if filename.endswith('.bin'):
+            potential_title = filename[:-4]  # Remove .bin extension
+            # Clean up No-Intro naming convention
+            if ' (World)' in potential_title:
+                potential_title = potential_title.replace(' (World)', '')
+            out['potential_title'] = potential_title
+    except:
+        pass
+    
+    # Game & Watch games don't have internal checksums or headers
+    # All identification is done via CRC32 database lookup
+    out['header_format'] = 'None'
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['GameWatch']:
+        gamedb_entry = db['GameWatch'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify SNK Neo Geo Pocket Color game
+def identify_neogeopocket_color(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in NGP_ROM_SIZES:
+        out['rom_size_category'] = NGP_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Neo Geo Pocket Color ROMs have the same header structure as NGP
+    out['format'] = 'NGPC ROM'
+    out['processor'] = 'Toshiba TLCS-900H'
+    
+    # Parse header information
+    try:
+        # Check for SNK license string at offset 0x00
+        license_str = data[0x00:0x1C].decode('ascii', errors='ignore').strip()
+        if 'LICENSED BY SNK' in license_str:
+            out['license'] = 'SNK Corporation'
+            out['header_valid'] = 'Yes'
+        else:
+            out['header_valid'] = 'No'
+        
+        # Game title at offset 0x24 (12 bytes)
+        title_raw = data[0x24:0x30]
+        title = title_raw.decode('ascii', errors='ignore').rstrip('\x00').strip()
+        if title:
+            out['internal_title'] = title
+        
+        # Additional header info
+        # System type at 0x22
+        system_type = data[0x22] if len(data) > 0x22 else 0
+        if system_type == 0x00:
+            out['system_type'] = 'Neo Geo Pocket'
+        elif system_type == 0x10:
+            out['system_type'] = 'Neo Geo Pocket Color'
+        else:
+            out['system_type'] = f'Unknown (0x{system_type:02X})'
+        
+    except:
+        out['header_valid'] = 'No'
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['NGPC']:
+        gamedb_entry = db['NGPC'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify SNK Neo Geo Pocket game
+def identify_neogeopocket(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in NGP_ROM_SIZES:
+        out['rom_size_category'] = NGP_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Neo Geo Pocket ROMs have a standard header
+    out['format'] = 'NGP ROM'
+    out['processor'] = 'Toshiba TLCS-900H'
+    
+    # Parse header information
+    try:
+        # Check for SNK license string at offset 0x00
+        license_str = data[0x00:0x1C].decode('ascii', errors='ignore').strip()
+        if 'LICENSED BY SNK' in license_str:
+            out['license'] = 'SNK Corporation'
+            out['header_valid'] = 'Yes'
+        else:
+            out['header_valid'] = 'No'
+        
+        # Game title at offset 0x24 (12 bytes)
+        title_raw = data[0x24:0x30]
+        title = title_raw.decode('ascii', errors='ignore').rstrip('\x00').strip()
+        if title:
+            out['internal_title'] = title
+        
+        # Additional header info
+        # System type at 0x22
+        system_type = data[0x22] if len(data) > 0x22 else 0
+        if system_type == 0x00:
+            out['system_type'] = 'Neo Geo Pocket'
+        elif system_type == 0x10:
+            out['system_type'] = 'Neo Geo Pocket Color'
+        else:
+            out['system_type'] = f'Unknown (0x{system_type:02X})'
+        
+    except:
+        out['header_valid'] = 'No'
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['NGP']:
+        gamedb_entry = db['NGP'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify GCE Vectrex game
+def identify_vectrex(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in VECTREX_ROM_SIZES:
+        out['rom_size_category'] = VECTREX_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # Vectrex ROMs are raw binary dumps for 6809 processor
+    out['format'] = 'Raw ROM dump'
+    out['processor'] = 'Motorola 6809'
+    
+    # Try to extract copyright and title information
+    # Many Vectrex ROMs have text strings in the first few hundred bytes
+    try:
+        text_data = data[:512].decode('ascii', errors='ignore')
+        
+        # Look for copyright information
+        if 'GCE' in text_data:
+            out['copyright'] = 'GCE'
+        
+        # Try to find potential title (look for uppercase sequences)
+        import re
+        titles = re.findall(r'[A-Z][A-Z ]{3,}[A-Z]', text_data)
+        if titles:
+            # Filter out common non-title strings
+            filtered_titles = [t.strip() for t in titles if len(t.strip()) >= 4 and 'GCE' not in t]
+            if filtered_titles:
+                out['potential_title'] = filtered_titles[0]
+        
+    except:
+        pass
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['Vectrex']:
+        gamedb_entry = db['Vectrex'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
+# identify Sega SG-1000 game
+def identify_sega_sg1000(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=False):
+    # load ROM data
+    f = open_file(fn, mode='rb'); data = f.read(); f.close()
+    file_size = len(data)
+    
+    # prepare output with basic information
+    out = {
+        'file_size': file_size,
+    }
+    
+    # determine ROM size category and validate
+    if file_size in SEGA_SG1000_ROM_SIZES:
+        out['rom_size_category'] = SEGA_SG1000_ROM_SIZES[file_size]
+        out['valid_size'] = 'Yes'
+    else:
+        out['rom_size_category'] = 'Unknown'
+        out['valid_size'] = 'No'
+    
+    # SG-1000 ROMs are typically raw binary dumps without headers
+    out['format'] = 'Raw ROM dump'
+    out['header_found'] = 'No'
+    
+    # Look for potential SG-1000 characteristics
+    try:
+        # Check for common Z80 instruction patterns at the start
+        if len(data) >= 4:
+            # Look for common Z80 startup patterns
+            start_bytes = data[:4]
+            
+            # Common patterns: JP instruction (0xC3), DI instruction (0xF3), etc.
+            z80_patterns = [0xC3, 0xF3, 0x01, 0x31]  # JP, DI, LD BC, LD SP
+            pattern_count = sum(1 for byte in start_bytes if byte in z80_patterns)
+            out['z80_pattern_score'] = pattern_count
+            
+            # Check for jump instruction at start (common in SG-1000 ROMs)
+            if start_bytes[0] == 0xC3:  # JP instruction
+                jump_addr = start_bytes[1] | (start_bytes[2] << 8)
+                out['startup_jump_address'] = f'0x{jump_addr:04X}'
+        
+        # Look for potential text strings or patterns
+        search_data = data[:1024]  # First 1KB
+        
+        # Look for common SG-1000 related strings or patterns
+        try:
+            text_content = search_data.decode('ascii', errors='ignore').upper()
+            sega_indicators = ['SEGA', 'SG-1000', 'SC-3000']
+            found_indicators = [indicator for indicator in sega_indicators if indicator in text_content]
+            if found_indicators:
+                out['detected_indicators'] = ', '.join(found_indicators)
+        except:
+            pass
+        
+        # Analyze byte distribution (SG-1000 ROMs often have specific patterns)
+        if len(data) >= 256:
+            sample_bytes = data[:256]
+            zero_count = sample_bytes.count(0x00)
+            ff_count = sample_bytes.count(0xFF)
+            
+            # High concentration of 0x00 or 0xFF might indicate padding or data sections
+            if zero_count > 50:
+                out['high_zero_content'] = 'Yes'
+            if ff_count > 50:
+                out['high_ff_content'] = 'Yes'
+    
+    except:
+        pass
+    
+    # Calculate CRC32 of entire ROM for database lookup
+    checksum = crc32(data)
+    out['crc32'] = hex(checksum)[2:].zfill(8)
+    
+    # Identify game from database using CRC32
+    if checksum in db['SegaSG1000']:
+        gamedb_entry = db['SegaSG1000'][checksum]
+        for k,v in gamedb_entry.items():
+            if (k not in out) or prefer_gamedb:
+                out[k] = v
+    
+    return out
+
 # dictionary storing all identify functions
 IDENTIFY = {
+    'Atari2600': identify_atari2600,
+    'Atari5200': identify_atari5200,
+    'Atari7800': identify_atari7800,
+    'AtariJaguar': identify_atari_jaguar,
+    'AtariLynx': identify_atari_lynx,
     'GB':        identify_gb_gbc,
     'GBC':       identify_gb_gbc,
     'GBA':       identify_gba,
@@ -1163,6 +3469,35 @@ IDENTIFY = {
     'Saturn':    identify_saturn,
     'SegaCD':    identify_segacd,
     'SNES':      identify_snes,
+    'WonderSwan': identify_wonderswan,
+    'WonderSwanColor': identify_wonderswan,
+    'ColecoVision': identify_colecovision,
+    'PCEngine': identify_pcengine,
+    'PCEngineSuperGrafx': identify_pcengine,
+    'GameGear': identify_gamegear,
+    'MasterSystem': identify_mastersystem,
+    'Sega32X': identify_sega32x,
+    'NintendoFDS': identify_nintendo_fds,
+    'SegaSG1000': identify_sega_sg1000,
+    'Vectrex': identify_vectrex,
+    'NGP': identify_neogeopocket,
+    'NGPC': identify_neogeopocket_color,
+    'GameWatch': identify_gamewatch,
+    'C64': identify_c64,
+    'AtariST': identify_atarist,
+    'Satellaview': identify_satellaview,
+    'N64DD': identify_n64dd,
+    'SufamiTurbo': identify_sufami_turbo,
+    'SegaPico': identify_sega_pico,
+    'Amiga': identify_amiga,
+    'MSX': identify_msx,
+    'MSX2': identify_msx2,
+    'CasioLoopy': identify_casio_loopy,
+    'GameCom': identify_tiger_gamecom,
+    'Supervision': identify_watara_supervision,
+    'MegaDuck': identify_welback_megaduck,
+    'FMTowns': identify_fujitsu_fmtowns,
+    'PC98': identify_nec_pc98,
 }
 GAMEID_CONSOLES = sorted(IDENTIFY.keys())
 IDENTIFY = {k.upper():v for k,v in IDENTIFY.items()} # upper-case for case-insensitivity

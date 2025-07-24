@@ -19,33 +19,59 @@ from GameID import bins_from_cue, check_exists, check_not_exists, error, get_ext
 MAX_SIZE_CD = 734003200 # 700 MiB
 HEADER_SIZE = 1000000 # how many bytes to read when attempting to manually detect game from raw data
 CONSOLE_EXTS = { # https://emulation.gametechwiki.com/index.php/List_of_filetypes
-    '32X':       {'32x'},                                     # Sega 32X
+    'Sega32X':   {'32x'},                                     # Sega 32X
+    'SegaSG1000': {'sg'},                                     # Sega SG-1000
     '3DS':       {'3ds', 'cia'},                              # Nintendo 3DS
     'Amiga':     {'adf', 'adz', 'dms', 'ipf'},                # Amiga
     'Android':   {'apk', 'obb'},                              # Android
+    'Atari2600': {'a26', 'bin', 'rom'},                       # Atari 2600
+    'Atari5200': {'a52', 'bin', 'car'},                       # Atari 5200
+    'Atari7800': {'a78', 'bin'},                              # Atari 7800
+    'AtariJaguar': {'j64', 'jag', 'rom', 'abs', 'cof'},       # Atari Jaguar
+    'AtariLynx': {'lnx', 'lyx'},                              # Atari Lynx
+    'AtariST':   {'ipf', 'msa', 'st', 'stx'},                 # Atari ST
+    'C64':       {'bin', 'crt', 'd64', 'prg'},                # Commodore 64
+    'CasioLoopy': {'bin'},                                    # Casio Loopy
+    'ColecoVision': {'col'},                                  # Coleco ColecoVision
     'Dreamcast': {'bin', 'cdi', 'dat', 'gdi', 'lst'},         # Sega Dreamcast
+    'FMTowns':   {'iso'},                                     # Fujitsu FM Towns
+    'GameCom':   {'tgc'},                                     # Tiger Game.com
     'GameGear':  {'gg'},                                      # Sega Game Gear
+    'GameWatch': {'bin'},                                     # Nintendo Game & Watch
     'GB':        {'gb'},                                      # Nintendo GameBoy
+    'MasterSystem': {'sms'},                                  # Sega Master System
     'GBA':       {'gba', 'srl'},                              # Nintendo GameBoy Advance
     'GBC':       {'gbc'},                                     # Nintendo GameBoy Color
     'GC':        {'cso', 'gcm', 'gcz', 'iso', 'rvz'},         # Nintendo GameCube
     'Genesis':   {'gen', 'md', 'smd'},                        # Sega Genesis
-    'N64':       {'n64', 'ndd', 'v64', 'z64'},                # Nintendo 64
+    'MegaDuck':  {'bin'},                                     # Welback Mega Duck
+    'MSX':       {'rom'},                                     # Microsoft MSX
+    'MSX2':      {'rom'},                                     # Microsoft MSX2
+    'N64':       {'n64', 'v64', 'z64'},                       # Nintendo 64
+    'N64DD':     {'ndd'},                                     # Nintendo 64DD
     'NDS':       {'app', 'dsi', 'ids', 'nds', 'srl'},         # Nintendo DS
-    'NES':       {'fds', 'nes', 'nez', 'unf', 'unif'},        # Nintendo Entertainment System
+    'NES':       {'nes', 'nez', 'unf', 'unif'},               # Nintendo Entertainment System
+    'NintendoFDS': {'fds'},                                   # Nintendo Family Computer Disk System
     'NGP':       {'ngp'},                                     # SNK Neo Geo Pocket
     'NGPC':      {'ngpc'},                                    # SNK Neo Geo Pocket Color
-    'PCE':       {'pce'},                                     # PC Engine
+    'PC98':      {'d88'},                                     # NEC PC-98
+    'PCEngine':  {'pce'},                                     # PC Engine/TurboGrafx-16
+    'PCEngineSuperGrafx': {'sgx'},                            # PC Engine SuperGrafx
     'PS2':       {'bin', 'chd', 'cso', 'cue', 'iso'},         # Sony PlayStation 2
     'PSP':       {'cso', 'iso'},                              # Sony PlayStation Portable
     'PSX':       {'bin', 'chd', 'cue', 'ecm', 'iso'},         # Sony PlayStation
     'PSV':       {'vpk'},                                     # Sony PlayStation Vita
+    'Satellaview': {'bs'},                                    # Nintendo Satellaview
+    'SegaPico': {'md'},                                       # Sega PICO
     'SNES':      {'sfc', 'smc', 'swc'},                       # Super Nintendo Entertainment System
+    'SufamiTurbo': {'st'},                                    # Nintendo Sufami Turbo
+    'Supervision': {'sv'},                                    # Watara Supervision
     'Switch':    {'nsp', 'xci'},                              # Nintendo Switch
     'VB':        {'vb'},                                      # Nintendo Virtual Boy
+    'Vectrex':   {'vec'},                                     # GCE Vectrex
     'Wii':       {'cso', 'gcz', 'iso', 'rvz', 'wad', 'wbfs'}, # Nintendo Wii
-    'WS':        {'ws'},                                      # Bandai WonderSwan
-    'WSC':       {'wsc'},                                     # Bandai WonderSwan Color
+    'WonderSwan': {'ws'},                                     # Bandai WonderSwan
+    'WonderSwanColor': {'wsc'},                               # Bandai WonderSwan Color
     'XBOX':      {'iso', 'xiso'},                             # Microsoft XBOX
     'XBOX360':   {'iso'},                                     # Microsoft XBOX 360
 }
