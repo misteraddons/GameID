@@ -283,6 +283,28 @@ def pcecd_hashes_from_cue(fn):
     base_disc_id = sha1(('%s|%s' % (toc_sha1, boot96_sha1)).encode()).hexdigest()
     return toc_sha1, boot96_sha1, base_disc_id
 
+# compute full-image SHA1 across all CUE-referenced image files in CUE order
+def pcecd_full_image_sha1(fn):
+    cue_dir = dirname(abspath(expanduser(fn)))
+    tracks = parse_cue(fn)
+    image_names = list(dict.fromkeys([t['file'] for t in tracks if t.get('file')]))
+    if len(image_names) == 0:
+        error("CUE has no FILE entries: %s" % fn)
+    h = sha1()
+    image_size = 0
+    for image_name in image_names:
+        image_path = pathjoin(cue_dir, image_name)
+        if not isfile(image_path):
+            error("Missing CUE image file: %s" % image_path)
+        with open_file(image_path, 'rb') as f:
+            while True:
+                data = f.read(DEFAULT_BUFSIZE)
+                if len(data) == 0:
+                    break
+                h.update(data)
+                image_size += len(data)
+    return h.hexdigest(), image_size
+
 # helper class to handle mounted discs / extracted images
 class MountedDisc:
     # initialize
@@ -1299,10 +1321,21 @@ def identify_pcecd(fn, db, user_uuid=None, user_volume_ID=None, prefer_gamedb=Fa
         gamedb_entry = candidates[0]
         out['match_status'] = 'exact'
     else:
-        gamedb_entry = candidates[0]
-        out['match_status'] = 'ambiguous'
         out['candidate_count'] = str(len(candidates))
         out['candidate_titles'] = ' | '.join(c.get('detected_title', c.get('cue_name', '')) for c in candidates)
+        sha1_candidates = [c for c in candidates if c.get('full_image_sha1', '').strip()]
+        resolved_candidates = []
+        if len(sha1_candidates) != 0:
+            full_image_sha1, full_image_size = pcecd_full_image_sha1(fn)
+            out['full_image_sha1'] = full_image_sha1
+            out['full_image_size'] = str(full_image_size)
+            resolved_candidates = [c for c in sha1_candidates if c.get('full_image_sha1', '').strip() == full_image_sha1]
+        if len(resolved_candidates) == 1:
+            gamedb_entry = resolved_candidates[0]
+            out['match_status'] = 'resolved_full_sha1'
+        else:
+            gamedb_entry = candidates[0]
+            out['match_status'] = 'ambiguous'
 
     for k,v in gamedb_entry.items():
         if (k not in out) or prefer_gamedb:
